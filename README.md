@@ -159,7 +159,7 @@ does not require algorithm update. This operators list is displayed using that t
 
 Operators precedence is controller by their types in next order: conditional, inline, attribute, content and scope operators.
 
-###Object property path
+### Object property path
 Basically templates operators inject values from content into target document. In order to identify the right
 piece of information content is regarded as a tree of values; every value can be reached traversing the three,
 from node to node following a unique path.
@@ -180,7 +180,7 @@ relative paths, but we need a reference named <b>scope object</b> or simply <b>s
 is <em>locality.name</em>; note missing dot from path start. For this reason all operators receive a scope object into parameters 
 list. Also, template scanning starts with scope root, in our case Person instance; there is a scope operator used to change current scope. 
  
-###Templates implementations
+### Templates implementations
 There are two templates engine implementations: serializer and injector. A serializer traverses DOM tree using 
 depth-first algorithm and serialize every node to a given writer. If current node contains templates operators 
 execute them. Operator execution act upon model object and result is also serialized to stream. 
@@ -207,7 +207,7 @@ to client documents generated on the fly, serialized on Servlet writer whereas c
 user interface. But both support the same operators with exactly the same behavior so that documents generated on server side or on
 client look exactly the same, of course if generated from the same template. 
 
-###Experimental Solution
+### Experimental Solution
 
 Uses namespace for operators prefix and o:load operator to load content from server.
 <pre>
