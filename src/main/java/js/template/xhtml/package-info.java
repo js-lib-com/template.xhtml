@@ -1,5 +1,5 @@
 /**
- * Declarative X(HT)ML templates engine. First thing first: declarative part. This templates engine is indeed declarative: it
+ * Declarative X(HT)ML templates engine. First thing first: declarative part. This templates engine is indeed declarative. It
  * does not embed programming language into (X)HTML code. And this - beside being much easier to learn and use - comes with important 
  * consequence: a complete separation of logic and data. Declarative nature forces view to deal only with presentation, there is no 
  * chance for developer to mix-in business logic - see code samples.
