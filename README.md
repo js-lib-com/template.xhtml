@@ -1,60 +1,60 @@
 # Reference implementation for Templates Engine API
 
 This is the reference, declarative implementation for X(HT)ML Templates Engine [API](https://github.com/js-lib-com/api/tree/master/template).
-First thing first: declarative part. This templates engine is indeed declarative. It does not embed programming language into (X)HTML code. 
-And this - beside being much easier to learn and use - comes with important consequence: a complete 
-separation of logic and data presentation. Declarative nature forces view to deal only with presentation, there is no 
-chance for developer to mix-in business logic - see code samples.
-<pre>
-	&lt;ul data-list="contacts"&gt;
-		&lt;li&gt;&lt;span data-text="name" /&gt; - &lt;span data-text="phone" /&gt;&lt;/li&gt;
-	&lt;/ul&gt;
-</pre>
+First thing first: declarative part. This templates engine is indeed declarative. It does not embed 
+programming language into (X)HTML code. And this - beside being much easier to learn and use - comes 
+with important consequence: a complete separation of logic and data presentation. Declarative nature 
+forces view to deal only with presentation, there is no chance for developer to mix-in business logic - see code samples.
+```
+&lt;ul data-list="contacts"&gt;
+	&lt;li&gt;&lt;span data-text="name" /&gt; - &lt;span data-text="phone" /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+```
 
 Below is a typical templates engine using embedded Groovy. For a user interface developer seasoned with 
 HTML this code may look a little more difficult to grasp. But the real thing is concern separation: 
 user interface developer need not to know contacts comes from an instance named <code>client</code> 
 and that field name is <code>contact</code>. And because the language allows it, is possible to alter 
 model object values from templates which is bad.   
-<pre>
-	&lt;ul&gt;
-		#{list contacts:client.contacts, as:'contact'}
-			&lt;li&gt;${contact.name} - ${contact.phone}&lt;/li&gt;
-		#{/list}
-	&lt;/ul&gt;
-</pre>
+```
+&lt;ul&gt;
+	#{list contacts:client.contacts, as:'contact'}
+		&lt;li&gt;${contact.name} - ${contact.phone}&lt;/li&gt;
+	#{/list}
+&lt;/ul&gt;
+```
 
 ### Temples engine overview
 A template is an X(HT)ML file that contains templates operators. An operator is declared into and operates 
 on an js.dom.Element and has an opcode and exactly one operand. The most common operator is setter which 
 takes care to set element text content or attribute. A short example may clarify: 
-<pre>
- // model object
-  class Person {
-      String description = "person description";
-      Picture picture = new Picture("images/person.png");
-  };
+```
+// model object
+class Person {
+	String description = "person description";
+	Picture picture = new Picture("images/person.png");
+};
   
-  // template fragment
-  &lt;p data-text="description"&gt;&lt;/p&gt;
-  &lt;img data-attr="src:picture;title:description;" /&gt;
-</pre>
+// template fragment
+&lt;p data-text="description"&gt;&lt;/p&gt;
+&lt;img data-attr="src:picture;title:description;" /&gt;
+```
 
-Templates engine enacts <b>data-text</b> and <b>data-attr</b> operators that set paragraph text to <b>Person</b>
-<em>description</em>, image source to <em>picture</em> and image tooltip, i.e. its title attribute, also to <em>description</em>.
-<pre>
- &lt;p&gt;person description&lt;/p&gt;
- &lt;img src="images/person.png" title="person description" /&gt;
-</pre>
+Templates engine enacts *data-text* and *data-attr* operators that set paragraph text to `Person`
+`description`, image source to `picture` and image tooltip, i.e. its title attribute, also to `description`.
+```
+&lt;p&gt;person description&lt;/p&gt;
+&lt;img src="images/person.png" title="person description" /&gt;
+```
  
 Templates operators are declared using standard X(HT)ML attributes and uses next syntax:
-<pre>
-  operator := 'data' '-' opcode '=' '"' operand '"'
-  opcode := see <a href="#operators-list">operators list</a>
-  operand := propertyPath | expression
-  propertyPath := see <a href="#object-property-path">object property path</a> 
-  expression := evaluated by operator
-</pre>
+```
+operator := 'data' '-' opcode '=' '"' operand '"'
+opcode := see <a href="#operators-list">operators list</a>
+operand := propertyPath | expression
+propertyPath := see <a href="#object-property-path">object property path</a> 
+expression := evaluated by operator
+```
 
 One may notice operator opcode is prefixed with <em>data-</em>. This is indeed on purpose: HTML5 allows for element attributes 
 extensions and extensions name start exactly with that prefix.
