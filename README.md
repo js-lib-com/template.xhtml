@@ -86,76 +86,30 @@ is an *m* in the domain such that TE(m) = e.
 Templates engine algorithm is generic and operates on operator types, that is, groups of operators. This way adding new operators
 does not require algorithm update. This operators list is displayed using that types hierarchy. 
 
-<table>
- <tr>
- <td colspan="2">1. CONDITIONAL - include or exclude DOM branches based on some condition:
- <tr>
- <td><b>if
- <td>if value is empty element branch is not included in resulting document
- <tr>
- <td><b>exclude
- <td>exclude element and its descendants from resulting document; implementation may choose to hide or completely remove the branch
+|1. CONDITIONAL - include or exclude DOM branches based on some condition:|
+|if|if value is empty element branch is not included in resulting document|
+|exclude|exclude element and its descendants from resulting document; implementation may choose to hide or completely remove the branch|
  
- <tr>
- <td>&nbsp;
- <tr>
- <td colspan="2">2. ATTRIBUTE - set specified attribute to value extracted from content:
- <tr>
- <td><b>attr
- <td>set attributes values; both attributes name and value are specified into expression operand
- <tr>
- <td><b>id
- <td>convenient attribute setter for element ID
- <tr>
- <td><b>src
- <td>convenient attribute setter for image source
- <tr>
- <td><b>href
- <td>convenient attribute setter for hyper-references; element should be an anchor or a resource link
- <tr>
- <td><b>title
- <td>convenient attribute setter for tooltips
- <tr>
- <td><b>value
- <td>convenient attribute setter for element value; element should be an input or textarea
+|2. ATTRIBUTE - set specified attribute to value extracted from content:|
+|attr|set attributes values; both attributes name and value are specified into expression operand|
+|id|convenient attribute setter for element ID|
+|src|convenient attribute setter for image source|
+|href|convenient attribute setter for hyper-references; element should be an anchor or a resource link|
+|title|convenient attribute setter for tooltips|
+|value|convenient attribute setter for element value; element should be an input or textarea|
  
- <tr>
- <td>&nbsp;
- <tr>
- <td colspan="2">3. CONTENT - operates upon element content be it text content or generated children elements:
- <tr>
- <td><b>object
- <td>current element is an object with many properties and should have child elements
- <tr>
- <td><b>text
- <td>set element text content
- <tr>
- <td><b>html
- <td>set element inner HTML, useful for text formatted with HTML tags
- <tr>
- <td><b>numbering
- <td>set element text content accordingly numbering format and item index
- <tr>
- <td><b>list
- <td>current element is a list and should have a child element that is processed as list item
- <tr>
- <td><b>olist
- <td>ordered variant of `list`, that is, list with numbering
- <tr>
- <td><b>map
- <td>current element is a map and should have two child elements: first processed as map key and the second as value
- <tr>
- <td><b>omap
- <td>ordered variant of `map`, that is, map with numbering
+|3. CONTENT - operates upon element content be it text content or generated children elements:|
+|object|current element is an object with many properties and should have child elements|
+|text|set element text content|
+|html|set element inner HTML, useful for text formatted with HTML tags|
+|numbering|set element text content accordingly numbering format and item index|
+|list|current element is a list and should have a child element that is processed as list item|
+|olist|ordered variant of `list`, that is, list with numbering|
+|map|current element is a map and should have two child elements: first processed as map key and the second as value|
+|omap|ordered variant of `map`, that is, map with numbering|
  
- <tr>
- <td>&nbsp;
- <tr>
- <td colspan="2">4. FORMATTING - set format instance used to prepare content value before actual insertion:
- <tr>
- <td><b>format
- <td>set formatter for value and text content setters
-</table>  
+|4. FORMATTING - set format instance used to prepare content value before actual insertion:|
+|format|set formatter for value and text content setters|
 
 Operators precedence is controller by their types in next order: conditional, inline, attribute, content and scope operators.
 
