@@ -6,9 +6,9 @@ programming language into (X)HTML code. And this - beside being much easier to l
 with important consequence: a complete separation of logic and data presentation. Declarative nature 
 forces view to deal only with presentation, there is no chance for developer to mix-in business logic - see code samples.
 ```
-&lt;ul data-list="contacts"&gt;
-	&lt;li&gt;&lt;span data-text="name" /&gt; - &lt;span data-text="phone" /&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul data-list="contacts">
+	<li><span data-text="name" /> - <span data-text="phone" /></li>
+</ul>
 ```
 
 Below is a typical templates engine using embedded Groovy. For a user interface developer seasoned with 
