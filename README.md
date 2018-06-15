@@ -86,6 +86,7 @@ is an *m* in the domain such that TE(m) = e.
 Templates engine algorithm is generic and operates on operator types, that is, groups of operators. This way adding new operators
 does not require algorithm update. This operators list is displayed using that types hierarchy. 
 
+|Operator|Description|
 |---|---|
 |1|CONDITIONAL - include or exclude DOM branches based on some condition|
 |if|if value is empty element branch is not included in resulting document|
