@@ -87,6 +87,7 @@ Templates engine algorithm is generic and operates on operator types, that is, g
 does not require algorithm update. This operators list is displayed using that types hierarchy. 
 
 |1. CONDITIONAL - include or exclude DOM branches based on some condition:|
+|---|---|
 |if|if value is empty element branch is not included in resulting document|
 |exclude|exclude element and its descendants from resulting document; implementation may choose to hide or completely remove the branch|
  
