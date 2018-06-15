@@ -86,12 +86,13 @@ is an *m* in the domain such that TE(m) = e.
 Templates engine algorithm is generic and operates on operator types, that is, groups of operators. This way adding new operators
 does not require algorithm update. This operators list is displayed using that types hierarchy. 
 
-|1.|CONDITIONAL - include or exclude DOM branches based on some condition:|
+|1.|CONDITIONAL - include or exclude DOM branches based on some condition|
 |---|---|
 |if|if value is empty element branch is not included in resulting document|
 |exclude|exclude element and its descendants from resulting document; implementation may choose to hide or completely remove the branch|
  
-|2. ATTRIBUTE - set specified attribute to value extracted from content:|
+|2|ATTRIBUTE - set specified attribute to value extracted from content|
+|---|---|
 |attr|set attributes values; both attributes name and value are specified into expression operand|
 |id|convenient attribute setter for element ID|
 |src|convenient attribute setter for image source|
@@ -99,7 +100,8 @@ does not require algorithm update. This operators list is displayed using that t
 |title|convenient attribute setter for tooltips|
 |value|convenient attribute setter for element value; element should be an input or textarea|
  
-|3. CONTENT - operates upon element content be it text content or generated children elements:|
+|3|CONTENT - operates upon element content be it text content or generated children elements:|
+|---|---|
 |object|current element is an object with many properties and should have child elements|
 |text|set element text content|
 |html|set element inner HTML, useful for text formatted with HTML tags|
@@ -109,7 +111,8 @@ does not require algorithm update. This operators list is displayed using that t
 |map|current element is a map and should have two child elements: first processed as map key and the second as value|
 |omap|ordered variant of `map`, that is, map with numbering|
  
-|4. FORMATTING - set format instance used to prepare content value before actual insertion:|
+|4|FORMATTING - set format instance used to prepare content value before actual insertion:|
+|---|---|
 |format|set formatter for value and text content setters|
 
 Operators precedence is controller by their types in next order: conditional, inline, attribute, content and scope operators.
