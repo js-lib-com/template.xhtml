@@ -1,8 +1,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>js-lib</groupId>
+	<groupId>com.js-lib</groupId>
 	<artifactId>js-xhtml-template</artifactId>
 	<version>1.0.0</version>
+
+	<name>X(HT)ML Template Engine</name>
+	<description>Reference implementation for j(s)-lib template API, declarative, natural and based on X(HT)ML language.</description>
+	<url>https://github.com/js-lib-com/template.xhtml</url>
+
+	<developers>
+		<developer>
+			<name>Iulian Rotaru</name>
+			<email>iulian@js-lib.com</email>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>https://github.com/js-lib-com/template.xhtml.git</connection>
+		<url>https://github.com/js-lib-com/template.xhtml</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,10 +84,34 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.js-lib</groupId>
+			<artifactId>js-template-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.js-lib</groupId>
+			<artifactId>js-dom</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
@@ -82,22 +128,21 @@
 			<version>1.4.01</version>
 		</dependency>
 		<dependency>
-			<groupId>js-lib</groupId>
-			<artifactId>js-dom</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>js-lib</groupId>
-			<artifactId>js-template-api</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<name>X(HT)ML Template Engine</name>
-	<description>Declarative X(HT)ML templates engine.</description>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 </project>
