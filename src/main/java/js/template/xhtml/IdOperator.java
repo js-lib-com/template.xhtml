@@ -23,7 +23,6 @@ final class IdOperator extends Operator {
 	/**
 	 * Construct ID operator instance.
 	 * 
-	 * @param converterManager converter manager,
 	 * @param content dynamic content.
 	 */
 	IdOperator(Content content) {

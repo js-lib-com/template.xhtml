@@ -160,7 +160,7 @@ public class ConditionalOperatorUnitTest extends TestCaseEx
 
     DocumentBuilder builder = getBuilder();
     Document doc = builder.parseHTML(html);
-    XhtmlTemplate template = new XhtmlTemplate(doc);
+    XhtmlTemplate template = new XhtmlTemplate("test", doc);
 
     doc = builder.parseHTML(template.serialize(model));
 

@@ -1,72 +1,125 @@
 package js.template.xhtml;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
 import js.dom.Document;
 import js.dom.DocumentBuilder;
+import js.log.Log;
+import js.log.LogFactory;
 import js.template.Template;
 import js.template.TemplateEngine;
+import js.template.TemplateException;
 import js.util.Classes;
 
-public class XhtmlTemplateEngine implements TemplateEngine {
-	private DocumentBuilder documentBuilder;
-	private Map<File, Document> documentsCache = new HashMap<File, Document>();
+/**
+ * X(HT)ML implementation for template engine interface. This implementation uses X(HT)ML documents to store templates.
+ * Since parsing DOM document is costly this implementation uses internal cache of parsed DOM documents, for all used
+ * templates. Anyway, template DOM document is loaded and parsed on the fly, at first usage.
+ * <p>
+ * This implementation depends on Simplified X(HT)ML DOM Interface and expected a service to provide instance for
+ * {@link DocumentBuilder}.
+ * 
+ * @author Iulian Rotaru
+ * @version final
+ */
+public class XhtmlTemplateEngine implements TemplateEngine
+{
+  /** Class logger. */
+  private static final Log log = LogFactory.getLog(XhtmlTemplateEngine.class);
 
-	public XhtmlTemplateEngine() {
-		documentBuilder = Classes.loadService(DocumentBuilder.class);
-	}
+  /** DOM document builder. */
+  private DocumentBuilder documentBuilder;
+  /** Cache for parsed DOM documents. */
+  private Map<String, Document> cache = new HashMap<>();
 
-	@Override
-	public void setProperty(String name, Object value) {
-		// TODO Auto-generated method stub
+  /**
+   * Loads service instance for DOM document builder.
+   */
+  public XhtmlTemplateEngine()
+  {
+    documentBuilder = Classes.loadService(DocumentBuilder.class);
+  }
 
-	}
+  @Override
+  public void setProperty(String name, Object value)
+  {
+  }
 
-	@Override
-	public Template getTemplate(File file) throws IOException {
-		Document document = documentsCache.get(file);
-		if (document == null) {
-			synchronized (this) {
-				if (document == null) {
-					document = preloadTemplateDocument(documentBuilder, file);
-					documentsCache.put(file, document);
-				}
-			}
-		}
-		return new XhtmlTemplate(document);
-	}
+  @Override
+  public Template getTemplate(String templateName, Reader reader) throws IOException
+  {
+    Document document = cache.get(templateName);
+    if(document == null) {
+      synchronized(this) {
+        if(document == null) {
+          document = loadTemplateDocument(templateName, documentBuilder, reader);
+          cache.put(templateName, document);
+        }
+      }
+    }
+    return new XhtmlTemplate(templateName, document);
+  }
 
-	/**
-	 * Preload this view template document. Loads and parse template document then store it into {@link #template}.
-	 * 
-	 * @param builder DOM builder used to load document template,
-	 * @param file template file.
-	 * @throws IOException if template read operation fails.
-	 */
-	private static Document preloadTemplateDocument(DocumentBuilder builder, File file) throws IOException {
-		final int READ_AHEAD_SIZE = 20;
-		InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-		assert inputStream.markSupported();
-		inputStream.mark(READ_AHEAD_SIZE);
+  @Override
+  public Template getTemplate(File file) throws IOException
+  {
+    return getTemplate(file.getAbsolutePath(), new FileReader(file));
+  }
 
-		byte[] bytes = new byte[READ_AHEAD_SIZE];
-		// excerpt from InputStream APIDOC:
-		// The read(b, off, len) method for class InputStream simply calls the method read() repeatedly.
-		for (int i = 0; i < READ_AHEAD_SIZE; ++i) {
-			bytes[i] = (byte) inputStream.read();
-		}
-		String prolog = new String(bytes, "UTF-8");
-		// trivial heuristic to determine file is XML or HTML: check if file has XML declaration, i.e. starts with <?xml
-		boolean isXML = prolog.startsWith("<?xml");
+  /**
+   * Loads and parses template document then returns it.
+   * 
+   * @param builder DOM builder used to load document template,
+   * @param reader template document reader.
+   * @throws IOException if read operation fails or premature EOF.
+   * @throws TemplateException if template document is not XML or HTML.
+   */
+  private static Document loadTemplateDocument(String templateName, DocumentBuilder builder, Reader reader) throws IOException
+  {
+    final int READ_AHEAD_SIZE = 5;
+    BufferedReader bufferedReader = new BufferedReader(reader);
+    bufferedReader.mark(READ_AHEAD_SIZE);
 
-		inputStream.reset();
-		return isXML ? builder.loadXML(inputStream) : builder.loadHTML(inputStream);
-		// do not attempt to close input stream because Builder.load[X|HT]ML() method closes it
-	}
+    char[] cbuf = new char[READ_AHEAD_SIZE];
+    for(int i = 0; i < READ_AHEAD_SIZE; ++i) {
+      int c = bufferedReader.read();
+      if(c == -1) {
+        throw new IOException(String.format("Invalid X(HT)ML template |%s|. Premature EOF.", templateName));
+      }
+      cbuf[i] = (char)c;
+    }
+    String header = new String(cbuf);
+    if(header.charAt(0) != '<') {
+      throw new TemplateException("Invalid X(HT)ML template |%s|. Seems not XML like document.", templateName);
+    }
+
+    // trivial heuristic to determine file is XML or HTML; if is not explicitly HTML is considered XML
+    boolean isXML = true;
+    if(header.charAt(1) == '!') {
+      // HTML DOCTYPE always starts with <!
+      isXML = false;
+    }
+    else if(header.charAt(1) == '?') {
+      // XML prolog always starts with <?
+      isXML = true;
+    }
+    else {
+      // if not explicitly found HTML DOCTYPE or XML prolog uses root element to detect if HTML
+      // if anything else but <html document is considered XML
+      log.warn("No prolog found for X(HT)ML template |%s|. Uses root element to detect document type.", templateName);
+      if(header.toLowerCase().startsWith("<html")) {
+        isXML = false;
+      }
+    }
+
+    bufferedReader.reset();
+    return isXML ? builder.loadXML(bufferedReader) : builder.loadHTML(bufferedReader);
+    // do not attempt to close reader because DocumentBuilder.load[X|HT]ML() method takes care of that
+  }
 }

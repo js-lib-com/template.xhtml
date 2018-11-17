@@ -18,7 +18,7 @@ public class TemplateBenchmark extends TestCaseEx {
 		ConverterRegistry converterManager = ConverterRegistry.getInstance();
 		Content content = new Content(probe);
 
-		XhtmlTemplate template = new XhtmlTemplate(html);
+		XhtmlTemplate template = new XhtmlTemplate("bench-probe", html);
 
 		long start = new Date().getTime();
 		for (int i = 0; i < 10000; ++i) {

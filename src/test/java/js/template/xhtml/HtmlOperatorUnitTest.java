@@ -11,7 +11,7 @@ public class HtmlOperatorUnitTest extends TestCaseEx
   public void testEscapeText() throws FileNotFoundException, IOException
   {
     Document doc = getBuilder().parseHTML("<html><head></head><body data-text='.'></body></html>");
-    XhtmlTemplate template = new XhtmlTemplate(doc);
+    XhtmlTemplate template = new XhtmlTemplate("test", doc);
 
     StringWriter writer = new StringWriter();
     template.serialize("<>&\"'", writer);

@@ -41,7 +41,7 @@ class TestCaseEx extends TestCase
 
     DocumentBuilder builder = getBuilder();
     Document document = builder.parseHTML(htmlBuilder.toString());
-    XhtmlTemplate template = new XhtmlTemplate(document);
+    XhtmlTemplate template = new XhtmlTemplate("test", document);
 
     StringWriter writer = new StringWriter();
     try {

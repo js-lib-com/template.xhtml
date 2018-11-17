@@ -115,7 +115,8 @@ final class ConditionalExpression {
 	/**
 	 * Package default constructor.
 	 *
-	 * @param converter object value converter,
+	 * @param content dynamic content,
+	 * @param scope current object scope,
 	 * @param expression conditional expression to parse.
 	 * @throws ContentException
 	 */
