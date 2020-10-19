@@ -313,7 +313,7 @@ public class ConditionalExpressionUnitTest extends TestCaseEx
   {
     Content content = new Content(data);
     Object conditionalExpression = Classes.newInstance("js.template.xhtml.ConditionalExpression", content, data, expression);
-    assertEquals(expected, Classes.invoke(conditionalExpression, "value"));
+    assertEquals(expected, (boolean)Classes.invoke(conditionalExpression, "value"));
   }
 
   private static enum State
