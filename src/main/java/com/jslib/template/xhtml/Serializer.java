@@ -217,7 +217,7 @@ final class Serializer {
 			assert returnedValue instanceof Boolean;
 			boolean branchEnabled = (Boolean) returnedValue;
 			if (!branchEnabled) {
-				log.debug("Element |%s| rejected by conditional operator.", element);
+				log.debug("Element |{dom_element}| rejected by conditional operator.", element);
 				return;
 			}
 		}

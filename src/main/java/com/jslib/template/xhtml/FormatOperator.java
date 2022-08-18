@@ -73,10 +73,10 @@ final class FormatOperator extends Operator {
 				tlsFormatter = new ThreadLocal<Format>();
 				classFormatters.put(className, tlsFormatter);
 			} catch (NoSuchBeingException e) {
-				log.error("Formatter class |%s| not found.", className);
+				log.error("Formatter class |{java_type}| not found.", className);
 				return null;
 			} catch (ClassCastException e) {
-				log.error("Invalid formatter class |%s|. It should inherit from |%s|.", className, Format.class);
+				log.error("Invalid formatter class |{java_type}|. It should inherit from |{java_type}|.", className, Format.class);
 				return null;
 			}
 		}

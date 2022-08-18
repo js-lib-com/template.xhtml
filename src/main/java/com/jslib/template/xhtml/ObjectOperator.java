@@ -77,7 +77,7 @@ final class ObjectOperator extends Operator {
 		}
 		Object value = content.getObject(scope, propertyPath);
 		if (value == null) {
-			log.warn("Null scope for property |%s| on element |%s|.", propertyPath, element);
+			log.warn("Null scope for property |{template_path}| on element |{dom_element}|.", propertyPath, element);
 		} else if (!(propertyPath.equals(".") || isStrictObject(value))) {
 			throw new TemplateException(propertyPath, "Invalid content type. Expected strict object but got |%s|.", value.getClass());
 		}

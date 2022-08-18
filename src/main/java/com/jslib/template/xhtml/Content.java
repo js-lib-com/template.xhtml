@@ -426,10 +426,10 @@ public class Content
   private static void warn(Object scope, String propertyPath)
   {
     if(scope == null) {
-      log.warn("Null object scope while searching for property |%s|.", propertyPath);
+      log.warn("Null object scope while searching for property |{template_path}|.", propertyPath);
     }
     else {
-      log.warn("Null value for |%s#%s|.", scope.getClass(), propertyPath);
+      log.warn("Null value for |{java_type}#{template_path}|.", scope.getClass(), propertyPath);
     }
   }
 }

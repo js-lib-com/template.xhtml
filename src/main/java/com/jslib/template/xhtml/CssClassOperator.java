@@ -61,10 +61,10 @@ final class CssClassOperator extends Operator {
 			String className = pair.second();
 
 			if (conditionalExpression.value()) {
-				log.debug("True conditional expression |%s|. Add CSS class |%s| to element |%s|.", pair.first(), className, element.trace());
+				log.debug("True conditional expression |{template_expression}|. Add CSS class |{css_class}| to element |{dom_element}|.", pair.first(), className, element.trace());
 				cssClass.add(className);
 			} else {
-				log.debug("False conditional expression |%s|. Remove CSS class |%s| from element |%s|.", pair.first(), className, element.trace());
+				log.debug("False conditional expression |{template_expression}|. Remove CSS class |{css_class}| from element |{dom_element}|.", pair.first(), className, element.trace());
 				cssClass.remove(className);
 			}
 		}

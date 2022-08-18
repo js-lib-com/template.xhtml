@@ -114,7 +114,7 @@ public class XhtmlTemplateEngine implements TemplateEngine
     else {
       // if not explicitly found HTML DOCTYPE or XML prolog uses root element to detect if HTML
       // if anything else but <html document is considered XML
-      log.warn("No prolog found for X(HT)ML template |%s|. Uses root element to detect document type.", templateName);
+      log.warn("No prolog found for X(HT)ML template |{template_name}|. Uses root element to detect document type.", templateName);
       if(header.toLowerCase().startsWith("<html")) {
         isXML = false;
       }
